@@ -7,7 +7,7 @@ Sub AcceptCalCheckItems()
     
     ' Set the CalCheck folder where you want to accept the events
     Set objNamespace = Application.GetNamespace("MAPI")
-    Set CalCheckFolder = objNamespace.GetDefaultFolder(olFolderInbox).Folders("CalCheck")
+    Set CalCheckFolder = objNamespace.GetDefaultFolder(olFolderInbox).Parent.Folders("CalCheck")
     
     ' Get the selected items in the CalCheck folder
     Set objExplorer = Application.ActiveExplorer
