@@ -4,6 +4,7 @@ Sub AcceptCalCheckItems()
     Dim objNamespace As Outlook.NameSpace
     Dim objExplorer As Outlook.Explorer
     Dim objSelection As Outlook.Selection
+    Dim ItemTypes As String
     
     ' Set the CalCheck folder where you want to accept the events
     Set objNamespace = Application.GetNamespace("MAPI")
@@ -30,25 +31,32 @@ Sub AcceptCalCheckItems()
             Set AppointmentItem = CalCheckItem
             AppointmentItem.Respond (olResponseAccepted)
             Set AppointmentItem = Nothing
-            MsgBox "Accepted: AppointmentItem", vbInformation
+            ItemTypes = ItemTypes & "AppointmentItem" & vbCrLf
         ElseIf TypeOf CalCheckItem Is Outlook.MeetingItem Then
             ' Accept the meeting
             Dim MeetingItem As Outlook.MeetingItem
             Set MeetingItem = CalCheckItem
             MeetingItem.Respond (olMeetingAccepted)
             Set MeetingItem = Nothing
-            MsgBox "Accepted: MeetingItem", vbInformation
+            ItemTypes = ItemTypes & "MeetingItem" & vbCrLf
         ElseIf TypeOf CalCheckItem Is Outlook.MailItem Then
             ' Accept regular mail items
             Dim MailItem As Outlook.MailItem
             Set MailItem = CalCheckItem
             MailItem.ReplyAll
             Set MailItem = Nothing
-            MsgBox "Accepted: MailItem", vbInformation
+            ItemTypes = ItemTypes & "MailItem" & vbCrLf
         Else
-            MsgBox "Unsupported item type found.", vbExclamation
+            ItemTypes = ItemTypes & "Unsupported item type: " & TypeName(CalCheckItem) & vbCrLf
         End If
     Next CalCheckItem
+    
+    ' Display a message box with the types of items found in the CalCheck folder
+    If Len(ItemTypes) > 0 Then
+        MsgBox "Item types found in CalCheck folder:" & vbCrLf & ItemTypes, vbInformation
+    Else
+        MsgBox "No items found in CalCheck folder.", vbInformation
+    End If
     
     ' Clean up objects
     Set objNamespace = Nothing
