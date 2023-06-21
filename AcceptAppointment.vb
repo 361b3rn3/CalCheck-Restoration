@@ -11,7 +11,8 @@ Sub AcceptAppointment()
         MsgBox "Appointment request found."
         If TypeName(myApptReq) = "AppointmentItem" Then
             MsgBox "Appointment request is a valid appointment item."
-            myApptReq.Accept
+            myApptReq.MeetingStatus = olMeetingAccepted
+            myApptReq.Save
             MsgBox "Appointment request accepted."
         Else
             MsgBox "Appointment request is not a valid appointment item."
