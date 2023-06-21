@@ -36,9 +36,12 @@ Sub AcceptCalCheckItems()
             Set MeetingItem = CalCheckItem
             MeetingItem.Respond (olMeetingAccepted)
             Set MeetingItem = Nothing
-        Else
+        ElseIf TypeOf CalCheckItem Is Outlook.MailItem Then
             ' Accept regular mail items
-            CalCheckItem.Accept
+            Dim MailItem As Outlook.MailItem
+            Set MailItem = CalCheckItem
+            MailItem.ReplyAll
+            Set MailItem = Nothing
         End If
     Next CalCheckItem
     
