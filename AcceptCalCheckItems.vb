@@ -30,18 +30,23 @@ Sub AcceptCalCheckItems()
             Set AppointmentItem = CalCheckItem
             AppointmentItem.Respond (olResponseAccepted)
             Set AppointmentItem = Nothing
+            MsgBox "Accepted: AppointmentItem", vbInformation
         ElseIf TypeOf CalCheckItem Is Outlook.MeetingItem Then
             ' Accept the meeting
             Dim MeetingItem As Outlook.MeetingItem
             Set MeetingItem = CalCheckItem
             MeetingItem.Respond (olMeetingAccepted)
             Set MeetingItem = Nothing
+            MsgBox "Accepted: MeetingItem", vbInformation
         ElseIf TypeOf CalCheckItem Is Outlook.MailItem Then
             ' Accept regular mail items
             Dim MailItem As Outlook.MailItem
             Set MailItem = CalCheckItem
             MailItem.ReplyAll
             Set MailItem = Nothing
+            MsgBox "Accepted: MailItem", vbInformation
+        Else
+            MsgBox "Unsupported item type found.", vbExclamation
         End If
     Next CalCheckItem
     
